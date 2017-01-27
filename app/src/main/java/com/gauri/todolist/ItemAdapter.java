@@ -1,6 +1,8 @@
 package com.gauri.todolist;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ListItem listItem = getItem(position);
+        final ListItem listItem = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_layout, parent, false);
         }
@@ -34,7 +36,31 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(view.getContext(),"Testing delete", Toast.LENGTH_LONG).show();
-                listItems.remove(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Confirm Delete");
+                builder
+                        .setMessage("Are you sure you want to delete "+listItem.taskName)
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                listItems.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = builder.create();
+
+                // show it
+                alertDialog.show();
+
                 notifyDataSetChanged();
                 // TODO: Write it to file.
             }
