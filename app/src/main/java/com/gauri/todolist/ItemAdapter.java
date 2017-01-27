@@ -36,7 +36,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
 //                Toast.makeText(view.getContext(),"Testing delete", Toast.LENGTH_LONG).show();
                 listItems.remove(position);
                 notifyDataSetChanged();
-                // TODO: Write it to file or pass in a listener from Main Activity.
+                // TODO: Write it to file.
             }
         });
         // Return the completed view to render on screen
