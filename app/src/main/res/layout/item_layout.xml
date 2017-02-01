@@ -2,14 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/listItemContainer"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:text="hello"
+        tools:text="hello"
         android:id="@+id/tvItem"
-        android:layout_alignParentLeft="true" />
+        android:layout_toRightOf="@+id/checkBox"
+        android:layout_marginLeft="10dp"/>
+
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -17,4 +21,22 @@
         android:id="@+id/imgDelete"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/tvPriority"
+        tools:text="high"
+        android:textAllCaps="true"
+        android:layout_below="@+id/tvItem"
+        android:layout_toRightOf="@+id/checkBox"
+        android:layout_marginLeft="10dp"/>
+
 </RelativeLayout>

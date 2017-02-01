@@ -3,4 +3,9 @@
     <string name="add_task">Add Task</string>
     <string name="enter_new_task">Please Enter New Task</string>
     <string name="edit_task">Edit Task</string>
+    <string-array name="priority">
+        <item>LOW</item>
+        <item>MEDIUM</item>
+        <item>HIGH</item>
+    </string-array>
 </resources>
