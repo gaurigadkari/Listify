@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="150dp"
+    android:layout_centerHorizontal="true"
+    >
 
-    <EditText android:layout_width="match_parent"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:id="@+id/etTask"
+        android:id="@+id/etAddTask"
         android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
         android:hint="Task Name"/>
 
     <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etAddTask"
+        android:id="@+id/addSpinnerContainer"
         android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +32,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinnerPriority"
+        android:id="@+id/addSpinnerPriority"
         android:entries="@array/priority"/>
 
     </LinearLayout>
@@ -38,6 +44,10 @@
         android:textAlignment="center"
         android:text="Add"
         android:capitalize="words"
-        android:id="@+id/btnSave"/>
+        android:layout_below="@+id/addSpinnerContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/btnAdd"/>
 
-</LinearLayout>
+</RelativeLayout>

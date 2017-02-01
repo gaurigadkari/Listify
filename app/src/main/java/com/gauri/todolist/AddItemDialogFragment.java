@@ -39,10 +39,10 @@ public class AddItemDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        editText = (EditText) view.findViewById(R.id.etTask);
-        btnAdd = (Button) view.findViewById(R.id.btnSave);
+        editText = (EditText) view.findViewById(R.id.etAddTask);
+        btnAdd = (Button) view.findViewById(R.id.btnAdd);
         onSave();
-        spinnerPriority = (Spinner) view.findViewById(R.id.spinnerPriority);
+        spinnerPriority = (Spinner) view.findViewById(R.id.addSpinnerPriority);
         spinnerPriority.setSelection(priority);
     }
 
