@@ -1,8 +1,13 @@
 package com.gauri.todolist;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         populateArrayItems();
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(custItemAdapter);
@@ -51,11 +58,44 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_share:
+                shareToDoList();
+                break;
+        }
+        return true;
+    }
+
     public void populateArrayItems(){
         readItems();
         custItemAdapter = new ItemAdapter(this, todoItems, this);
     }
 
+    public void shareToDoList() {
+        String subject = "Listify to do list";
+        String toDoList ="";
+        int i;
+        int size = todoItems.size();
+        for(i = 0; i < size ; i++) {
+            toDoList = toDoList + todoItems.get(i).taskName + "\n";
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, toDoList);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 
     private void readItems() {
         File fileDir = getFilesDir();
