@@ -6,7 +6,7 @@ To Do App
 
 Submitted by: **Gauri Gadkari**
 
-Time spent: **45** hours spent in total
+Time spent: **48** hours spent in total
 
 ## User Stories
 
@@ -21,8 +21,11 @@ The following **required** functionality is completed:
 * [ ] Changed name of the app and app icon
 * [ ] Implemented dialog fragment for adding and editing list todo items
 * [ ] Implemented material design floating action button
+* [ ] Added animation, splash screen after launching the app
+* [ ] User can mark items as completed using the checkbox
+* [ ] Changed the theme of app using material design color palette
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
-![Video Walkthrough](ListifyVideo.gif)
+![Video Walkthrough](Listify.gif)
