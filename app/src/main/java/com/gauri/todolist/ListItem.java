@@ -1,7 +1,9 @@
 package com.gauri.todolist;
 
 
-public class ListItem {
+import java.io.Serializable;
+
+public class ListItem implements Serializable{
     String taskName;
     boolean isChecked;
     int priority;

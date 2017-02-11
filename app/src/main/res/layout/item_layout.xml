@@ -15,10 +15,11 @@
         android:layout_marginLeft="10dp"/>
 
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/ic_cancel_black_48px"
         android:id="@+id/imgDelete"
+        android:padding="5dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
 

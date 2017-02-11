@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
     ListView lvItems;
 //    EditText etNewTask;
 
+    private static final String STATE_ITEMS = "items";
     private final int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +31,15 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (savedInstanceState != null) {
+            todoItems = (ArrayList<ListItem>) savedInstanceState.get(STATE_ITEMS);
+        }
         populateArrayItems();
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(custItemAdapter);
 //        etNewTask = (EditText) findViewById(R.id.etNewTask);
+
+
 
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -57,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
                 startActivityForResult(i, REQUEST_CODE);*/
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(STATE_ITEMS,todoItems);
+
     }
 
     @Override
@@ -97,13 +110,15 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
         }
     }
 
-    private void readItems() {
+    public void readItems() {
         File fileDir = getFilesDir();
         File file = new File(fileDir, "todo.txt");
         try {
             //todoItems = new ArrayList<String> FileUtils.readLines(file));
             ArrayList<String> toDoItemStrings = new ArrayList<String>(FileUtils.readLines(file));
-
+            if(toDoItemStrings.size() == todoItems.size()) {
+                return;
+            }
             for(String temp : toDoItemStrings){
                 //TODO: store in db instead of file
                 ListItem item = new ListItem(temp, 0);
@@ -114,11 +129,16 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
 
         }
     }
-    private void writeItems() {
+    public void writeItems() {
         File fileDir = getFilesDir();
         File file = new File(fileDir, "todo.txt");
+        ArrayList<String> toDoItemStrings = new ArrayList<String>();
+        int size = todoItems.size();
+        for(int i =0; i < size ; i++) {
+            toDoItemStrings.add(todoItems.get(i).taskName);
+        }
         try {
-            FileUtils.writeLines(file, todoItems);
+            FileUtils.writeLines(file, toDoItemStrings);
 
         }catch (IOException e) {
 
@@ -176,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
         custItemAdapter.listItems.get(position).taskName = taskName;
         custItemAdapter.listItems.get(position).priority = priority;
         custItemAdapter.notifyDataSetChanged();
+        writeItems();
     }
 
     @Override
@@ -183,5 +204,6 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.ItemC
         ListItem listItem = new ListItem(taskName, priority);
         custItemAdapter.listItems.add(listItem);
         custItemAdapter.notifyDataSetChanged();
+        writeItems();
     }
 }

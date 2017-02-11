@@ -13,31 +13,6 @@ public class SplashActivity extends AwesomeSplash {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        View easySplashScreenView = new EasySplashScreen(SplashActivity.this)
-//                .withFullScreen()
-//                .withTargetActivity(MainActivity.class)
-//                .withSplashTimeOut(4000)
-//                .withBackgroundResource(android.R.color.holo_orange_light)
-//                .withLogo(R.drawable.list)
-//                .withAfterLogoText("Listify")
-//                .create();
-//        EasySplashScreen config = new EasySplashScreen(SplashActivity.this)
-//                .withFullScreen()
-//                .withTargetActivity(MainActivity.class)
-//                .withSplashTimeOut(4000)
-//                .withBackgroundResource(android.R.color.holo_red_light)
-//                .withLogo(R.mipmap.ic_new_launcher)
-//                .withAfterLogoText("Some more details with custom font");
-//        //add custom font
-//        Typeface pacificoFont = Typeface.createFromAsset(getAssets(), "Pacifico.ttf");
-//        config.getAfterLogoTextView().setTypeface(pacificoFont);
-//
-//        //change text color
-//        config.getHeaderTextView().setTextColor(Color.WHITE);
-//
-//        //finally create the view
-//        View easySplashScreenView = config.create();
-//        setContentView(easySplashScreenView);
     }
 
     @Override
@@ -56,18 +31,6 @@ public class SplashActivity extends AwesomeSplash {
         configSplash.setLogoSplash(R.mipmap.ic_launcher); //or any other drawable
         configSplash.setAnimLogoSplashDuration(2000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.Bounce); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
-
-
-//        //Customize Path
-//        configSplash.setPathSplash(Constants.DROID_LOGO); //set path String
-//        configSplash.setOriginalHeight(400); //in relation to your svg (path) resource
-//        configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
-//        configSplash.setAnimPathStrokeDrawingDuration(3000);
-//        configSplash.setPathSplashStrokeSize(3); //I advise value be <5
-//        configSplash.setPathSplashStrokeColor(R.color.colorAccent); //any color you want form colors.xml
-//        configSplash.setAnimPathFillingDuration(3000);
-//        configSplash.setPathSplashFillColor(R.color.fillColor); //path object filling color
-
 
         //Customize Title
         configSplash.setTitleSplash("Listify");

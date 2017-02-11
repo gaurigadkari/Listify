@@ -24,8 +24,10 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
     ItemClick listener;
     int priority;
     TextView displayPriority;
+    Context context;
     public ItemAdapter(Context context, ArrayList<ListItem> listItems, ItemClick listener) {
         super(context, 0 , listItems);
+        this.context = context;
         this.listItems = listItems;
         this.listener = listener;
     }
@@ -67,6 +69,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 listItems.remove(position);
                                 notifyDataSetChanged();
+                                ((MainActivity)context).writeItems();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -117,7 +120,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
                     ItemAdapter.this.add(completedItem);*/
                     listItems.remove(selPosition);
                     listItems.add(listItems.size(), completedItem);
-                    notifyDataSetChanged();
+
 //                    ((TextView)parent.getChildAt(listItems.size()).findViewById(R.id.tvItem)).setPaintFlags(tvItem.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 //                    ((CheckBox)parent.getChildAt(listItems.size()).findViewById(R.id.checkBox)).setChecked(true);
                     //tvItem.setPaintFlags(tvItem.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -127,6 +130,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
 //                    ((TextView)parent.getChildAt(selPosition).findViewById(R.id.tvItem)).setPaintFlags(tvItem.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
 //                    ((CheckBox)parent.getChildAt(selPosition).findViewById(R.id.checkBox)).setChecked(false);
                 }
+                notifyDataSetChanged();
             }
         });
         // Return the completed view to render on screen

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddItemDialogFragment extends DialogFragment {
     private EditText editText;
@@ -24,6 +25,10 @@ public class AddItemDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String addTask = editText.getText().toString();
+                if(addTask.isEmpty()) {
+                    Toast.makeText((AddItemDialogFragment.this).getContext(), "Task name cant be empty",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 int addPriority = spinnerPriority.getSelectedItemPosition();
                 addNewTask(addTask, addPriority);
                 dismiss();
