@@ -35,6 +35,11 @@ The following **additional** features are implemented:
 * [x] User can share the to do list
 * [x] Handle Orientation Change, so that data is not lost.
 
+**Wish List**
+* [ ] Add support for images.
+* [ ] Add support for dates.
+* [ ] Use RecyclerView instead of ListView.
+* [ ] Use CursorAdapter instead of ArrayAdapter.
 
 ## Video Walkthrough 
 
