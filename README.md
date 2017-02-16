@@ -33,6 +33,7 @@ The following **additional** features are implemented:
 * [x] User can mark items as completed using the checkbox
 * [x] Changed the theme of app using material design color palette
 * [x] User can share the to do list
+* [x] Handle Orientation Change, so that data is not lost.
 
 
 ## Video Walkthrough 
