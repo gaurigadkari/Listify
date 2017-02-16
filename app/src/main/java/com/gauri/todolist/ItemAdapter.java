@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 
 public class ItemAdapter extends ArrayAdapter<ListItem> {
     ArrayList<ListItem> listItems = new ArrayList<>();
-    ItemClick listener;
-    int priority;
-    TextView displayPriority;
+    HandleAdapterClick listener;
     Context context;
-    public ItemAdapter(Context context, ArrayList<ListItem> listItems, ItemClick listener) {
+    public ItemAdapter(Context context, ArrayList<ListItem> listItems, HandleAdapterClick listener) {
         super(context, 0 , listItems);
         this.context = context;
         this.listItems = listItems;
@@ -67,9 +62,10 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                int test =listItems.get(position).id;
+                                listener.onDeleteClick(position);
                                 listItems.remove(position);
                                 notifyDataSetChanged();
-                                ((MainActivity)context).writeItems();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -99,7 +95,7 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
 
         final CheckBox chkbox = (CheckBox) convertView.findViewById(R.id.checkBox);
         chkbox.setTag(position);
-        if(listItem.isChecked){
+        if(listItem.isChecked == 1){
             tvItem.setPaintFlags(tvItem.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             chkbox.setChecked(true);
         }else{
@@ -112,23 +108,11 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
                 ListItem completedItem = listItems.get(position);
                 int selPosition = (int)compoundButton.getTag();
                 if(flag){
-//                    listItems.remove(position);
-//                    listItems.add(listItems.size()-1, completedItem);
-//                    listItems.get(listItems.size()-1).isChecked = true;
-                    completedItem.isChecked = true;
-                    /*ItemAdapter.this.remove(completedItem);
-                    ItemAdapter.this.add(completedItem);*/
-                    listItems.remove(selPosition);
-                    listItems.add(listItems.size(), completedItem);
-
-//                    ((TextView)parent.getChildAt(listItems.size()).findViewById(R.id.tvItem)).setPaintFlags(tvItem.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//                    ((CheckBox)parent.getChildAt(listItems.size()).findViewById(R.id.checkBox)).setChecked(true);
-                    //tvItem.setPaintFlags(tvItem.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    //chkbox.setChecked(true);
+                    completedItem.isChecked = 1;
+                    listener.onCheckedUnchecked(position);
                 }else{
-                    completedItem.isChecked = false;
-//                    ((TextView)parent.getChildAt(selPosition).findViewById(R.id.tvItem)).setPaintFlags(tvItem.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-//                    ((CheckBox)parent.getChildAt(selPosition).findViewById(R.id.checkBox)).setChecked(false);
+                    completedItem.isChecked = 0;
+                    listener.onCheckedUnchecked(position);
                 }
                 notifyDataSetChanged();
             }
@@ -137,12 +121,9 @@ public class ItemAdapter extends ArrayAdapter<ListItem> {
         return convertView;
     }
 
-    public void setPriority() {
-
-    }
-
-
-    interface ItemClick{
+    interface HandleAdapterClick{
         void startEdit(int position,int priority);
+        void onDeleteClick(int position);
+        void onCheckedUnchecked(int position);
     }
 }

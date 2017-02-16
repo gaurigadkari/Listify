@@ -15,9 +15,11 @@ public class AddItemDialogFragment extends DialogFragment {
     private EditText editText;
     private Button btnAdd;
     private Spinner spinnerPriority;
-    int priority, position;
-    String task;
+    int priority;
+
+
     public AddItemDialogFragment() {
+
     }
 
     public void onSave() {

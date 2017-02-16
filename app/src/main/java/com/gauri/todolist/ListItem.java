@@ -5,17 +5,14 @@ import java.io.Serializable;
 
 public class ListItem implements Serializable{
     String taskName;
-    boolean isChecked;
+    int isChecked;
     int priority;
+    int id;
 
     public ListItem (String taskName, int priority) {
         this.taskName = taskName;
-        this.isChecked = false;
+        this.isChecked = 0;
         this.priority = priority;
-    }
 
-    void setChecked(boolean val){
-        this.isChecked = val;
     }
-
 }

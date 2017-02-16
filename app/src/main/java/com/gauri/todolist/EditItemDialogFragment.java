@@ -57,6 +57,7 @@ public class EditItemDialogFragment extends DialogFragment {
         task = getArguments().getString("TaskName");
         position = getArguments().getInt("Position");
         priority = getArguments().getInt("Priority");
+
         editText = (EditText) view.findViewById(R.id.etTask);
         editText.setText(task);
         btnSave = (Button) view.findViewById(R.id.btnSave);
