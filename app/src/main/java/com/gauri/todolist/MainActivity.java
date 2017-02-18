@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements ItemAdapter.Handl
     ItemAdapter custItemAdapter;
     ListView lvItems;
     ListDatabaseHelper db;
-
     private static final String STATE_ITEMS = "items";
     private final int REQUEST_CODE = 1;
 

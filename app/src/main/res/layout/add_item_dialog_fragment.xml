@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="280dp"
-    android:layout_height="150dp"
-    android:layout_centerHorizontal="true"
-    >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true">
 
     <EditText
         android:layout_width="match_parent"
@@ -15,39 +14,43 @@
         android:layout_alignParentTop="true"
         android:hint="Task Name"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etAddTask"
-        android:id="@+id/addSpinnerContainer"
-        android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Priority : "
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp">
-    </TextView>
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addSpinnerPriority"
+        android:layout_below="@+id/etAddTask"
+        android:layout_margin="16dp"
         android:entries="@array/priority"/>
 
-    </LinearLayout>
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_add_a_photo_black_48dp"
+        android:id="@+id/chooseImage"
+        android:layout_below="@id/addSpinnerPriority"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="center"
+        android:backgroundTint="#ffff00"
+        android:padding="10dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
         android:text="Add"
         android:capitalize="words"
-        android:layout_below="@+id/addSpinnerContainer"
+        android:layout_below="@+id/chooseImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_margin="40dp"
         android:id="@+id/btnAdd"/>
+
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/displayImage"-->
+        <!--android:layout_below="@+id/btnAdd"-->
+        <!--android:layout_centerHorizontal="true"/>-->
 
 </RelativeLayout>

@@ -22,7 +22,16 @@
         android:padding="5dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
-
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_image_black_48dp"
+        android:id="@+id/imgShowImage"
+        android:padding="5dp"
+        android:layout_toLeftOf="@+id/imgDelete"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"/>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

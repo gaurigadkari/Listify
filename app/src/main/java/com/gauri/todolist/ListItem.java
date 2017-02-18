@@ -8,11 +8,13 @@ public class ListItem implements Serializable{
     int isChecked;
     int priority;
     int id;
+    String imageURL;
 
     public ListItem (String taskName, int priority) {
         this.taskName = taskName;
         this.isChecked = 0;
         this.priority = priority;
+        this.imageURL = "";
 
     }
 }
