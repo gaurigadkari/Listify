@@ -1,10 +1,9 @@
 package com.gauri.todolist;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,16 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -34,10 +33,12 @@ public class AddItemDialogFragment extends DialogFragment {
     private ImageView cameraBttn;
     private ImageView displayImage;
     private Spinner spinnerPriority;
-    int priority;
+    DatePicker datePicker;
+    //int priority;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final Uri mLocationForPhotos = null;
-
+    String mCurrentPhotoPath;
+    String date;
     public AddItemDialogFragment() {
 
     }
@@ -64,8 +65,20 @@ public class AddItemDialogFragment extends DialogFragment {
                     Toast.makeText((AddItemDialogFragment.this).getContext(), "Task name cant be empty",Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                //Due Date
+
+
+                int day = datePicker.getDayOfMonth();
+                int month = datePicker.getMonth() + 1;
+                int year = datePicker.getYear();
+
+                //tvDueDate.setText(listItem.date.toString());
+                date = month + "/" + day + "/" + year;
+
+
                 int addPriority = spinnerPriority.getSelectedItemPosition();
-                addNewTask(addTask, addPriority);
+                addNewTask(addTask, addPriority, mCurrentPhotoPath,date);
                 dismiss();
             }
         });
@@ -75,7 +88,19 @@ public class AddItemDialogFragment extends DialogFragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // getPackageManager() needs context hence calling getActivity()
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = Uri.fromFile(photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            }
         }
     }
 
@@ -84,28 +109,52 @@ public class AddItemDialogFragment extends DialogFragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //Bitmap thumbnail = data.("data");
             // Do other work with full size photo saved in mLocationForPhotos
-            onCaptureImageResult(data);
+            setPic();
         }
     }
 
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-//        File destination = new File(Environment.getExternalStorageDirectory(),
-//                System.currentTimeMillis() + ".jpg");
-//        FileOutputStream fo;
-//        try {
-//            destination.createNewFile();
-//            fo = new FileOutputStream(destination);
-//            fo.write(bytes.toByteArray());
-//            fo.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        cameraBttn.setImageBitmap(thumbnail);
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = cameraBttn.getWidth();
+        int targetH = cameraBttn.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        cameraBttn.setImageBitmap(bitmap);
+    }
+
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+//        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     @Nullable
@@ -120,7 +169,8 @@ public class AddItemDialogFragment extends DialogFragment {
         btnAdd = (Button) view.findViewById(R.id.btnAdd);
         onSave();
         spinnerPriority = (Spinner) view.findViewById(R.id.addSpinnerPriority);
-        spinnerPriority.setSelection(priority);
+        datePicker = (DatePicker) view.findViewById (R.id.addDatePicker);
+        //spinnerPriority.setSelection(priority);
         cameraBttn = (ImageView) view.findViewById(R.id.chooseImage);
 //        displayImage = (ImageView) view.findViewById(R.id.displayImage);
         cameraBttn.setOnClickListener(new View.OnClickListener() {
@@ -132,11 +182,11 @@ public class AddItemDialogFragment extends DialogFragment {
     }
 
     public static interface OnAddCompleteListener {
-        public abstract void onAddComplete(String taskName, int priority);
+        public abstract void onAddComplete(String taskName, int priority, String imagePath, String date);
     }
 
-    public void addNewTask(String addTask, int addPriority) {
+    public void addNewTask(String addTask, int addPriority, String imagePath, String date) {
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.onAddComplete(addTask, addPriority);
+        mainActivity.onAddComplete(addTask, addPriority, imagePath, date);
     }
 }

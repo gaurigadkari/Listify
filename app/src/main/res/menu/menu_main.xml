@@ -7,5 +7,10 @@
         app:showAsAction="ifRoom"
         android:title="Compose">
     </item>
+    <item
+        android:id="@+id/menuSort"
+        android:actionLayout="@layout/action_sort"
+        app:showAsAction="ifRoom"
+        android:title="Filter"/>
 
 </menu>

@@ -4,14 +4,30 @@
     android:layout_height="wrap_content"
     android:id="@+id/listItemContainer"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp">
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/checkBoxContainer"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/checkBox" />
+    </RelativeLayout>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
         tools:text="hello"
         android:id="@+id/tvItem"
-        android:layout_toRightOf="@+id/checkBox"
+        android:layout_toRightOf="@+id/checkBoxContainer"
         android:layout_marginLeft="10dp"/>
 
     <ImageView
@@ -22,6 +38,7 @@
         android:padding="5dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"/>
+
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -32,21 +49,17 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:visibility="gone"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:id="@+id/tvPriority"
+        android:id="@+id/tvDueDate"
         tools:text="high"
         android:textAllCaps="true"
         android:layout_below="@+id/tvItem"
-        android:layout_toRightOf="@+id/checkBox"
+        android:layout_toRightOf="@+id/checkBoxContainer"
         android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

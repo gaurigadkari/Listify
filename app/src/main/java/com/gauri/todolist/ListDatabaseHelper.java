@@ -21,6 +21,9 @@ public class ListDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_TASKNAME = "taskName";
     private static final String KEY_PRIORITY = "priority";
     private static final String KEY_CHECKED = "checked";
+    private static final String KEY_IMAGE_URL = "imagePath";
+    private static final String KEY_DATE = "date";
+
 
     public ListDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,8 +41,10 @@ public class ListDatabaseHelper extends SQLiteOpenHelper {
                 KEY_TASKNAME_ID + " INTEGER PRIMARY KEY," + // Define a primary key
                 KEY_TASKNAME + " TEXT," +
                 KEY_PRIORITY + " INT," +
-                KEY_CHECKED + " INT" +
-                ")";
+                KEY_CHECKED + " INT," +
+                KEY_IMAGE_URL + " TEXT," +
+                KEY_DATE + " TEXT" +
+        ")";
         db.execSQL(CREATE_TABLE_TASKS);
     }
 
@@ -67,6 +72,7 @@ public class ListDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_TASKNAME, task.taskName);
             values.put(KEY_PRIORITY, task.priority);
             values.put(KEY_CHECKED, task.isChecked);
+            values.put(KEY_DATE,task.date);
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             db.update(TABLE_TASKS, values, KEY_TASKNAME_ID + "=" + task.id,null);
@@ -102,9 +108,10 @@ public class ListDatabaseHelper extends SQLiteOpenHelper {
         int i = 0;
             if (cursor.moveToFirst()) {
             do {
-                ListItem cursorItem = new ListItem(cursor.getString(1),cursor.getInt(2));
+                ListItem cursorItem = new ListItem(cursor.getString(1),cursor.getInt(2), cursor.getString(4));
                 cursorItem.id = cursor.getInt(0);
                 cursorItem.isChecked = cursor.getInt(3);
+                cursorItem.date = cursor.getString(5);
                 cursorData.add(cursorItem);
 
             } while (cursor.moveToNext());
@@ -126,6 +133,9 @@ public class ListDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_TASKNAME, task.taskName);
             values.put(KEY_PRIORITY, task.priority);
             values.put(KEY_CHECKED, task.isChecked);
+            values.put(KEY_IMAGE_URL, task.imageURL);
+            values.put(KEY_DATE,task.date);
+
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             task.id = (int) db.insertOrThrow(TABLE_TASKS, null, values);
