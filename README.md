@@ -6,7 +6,7 @@ To Do App
 
 Submitted by: **Gauri Gadkari**
 
-Time spent: **48** hours spent in total
+Time spent: **60** hours spent in total
 
 ## User Stories
 The following **required** functionality is completed:
@@ -34,10 +34,12 @@ The following **additional** features are implemented:
 * [x] Changed the theme of app using material design color palette
 * [x] User can share the to do list
 * [x] Handle Orientation Change, so that data is not lost.
+* [x] Capability to add images to your To-Do items.
+* [x] Added support for adding Due Date to your to do items.
 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](Listify.gif)
+![Video Walkthrough](final-gif.gif)
